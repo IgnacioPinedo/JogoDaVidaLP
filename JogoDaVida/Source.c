@@ -4,7 +4,7 @@
 
 #define MatrixMax 100
 
-int newGrid[MatrixMax][MatrixMax], oldGrid[MatrixMax][MatrixMax], x, y, size, initiate, sleepTime, setInitGrid;
+int newGrid[MatrixMax][MatrixMax], oldGrid[MatrixMax][MatrixMax], x, y, size, initiate, sleepTime, setInitGrid, setGenDet, qtdGenDet, runGenDet;
 
 int Keys[256];
 
@@ -34,14 +34,14 @@ void createCell(float x, float y);
 
 int main(int argc, char** argv)
 {
-	char f = "";
+	char c= "";
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowPosition(50, 50);
 
 	//Escolhe o tamanho da grade
-	printf("escolha o tamanho da grade (minimo 50 - maximo 100):\n");
+	printf("Escolha o tamanho da grade (minimo 50 - maximo 100):\n");
 	scanf("%d", &size);
 
 	//limita o valor escolhido pelo usuario
@@ -54,13 +54,28 @@ int main(int argc, char** argv)
 	//seta o valor do tempo de geracoes
 	sleepTime = 1000;
 
-	//Escolhe o tamanho da grade
+	//Deixa o usuario carregar um arquivo
 	printf("Voce deseja inserir os dados pelo arquivo data? ('s' para sim e 'n' para nao)\n");
-	scanf(" %c", &f);
+	scanf(" %c", &c);
 
-	if (f == 's')
+	if (c == 's')
 	{
 		readFile();
+	}
+	
+	c == "";
+
+	//Deixa o usuario determinar a quantidade de geracoes
+	printf("Voce deseja selecionar o numero de geracoes? ('s' para sim e 'n' para nao)\n");
+	scanf(" %c", &c);
+
+	if (c == 's')
+	{	
+		setGenDet = 1;
+
+		//seta a quantidade de geracoes
+		printf("Quantas geracoes voce deseja gerar? ('s' para sim e 'n' para nao)\n");
+		scanf(" %d", &qtdGenDet);
 	}
 
 	//Seta o tamanho da grade
@@ -182,12 +197,12 @@ void mouse(int button, int state, int mousex, int mousey)
 			createCell(pointX - add, pointY);
 			toggleGrid(x - 2, y);
 			createCell(pointX - 2 * add, pointY);
-			toggleGrid(x, y + 1);
-			createCell(pointX, pointY - add);
 			toggleGrid(x - 1, y + 1);
 			createCell(pointX - add, pointY - add);
 			toggleGrid(x - 2, y + 1);
 			createCell(pointX - 2 * add, pointY - add);
+			toggleGrid(x - 3, y + 1);
+			createCell(pointX - 3 * add, pointY - add);
 
 			printf("Toad!\n");
 		}
@@ -442,6 +457,11 @@ void keyboard(unsigned char key, int x, int y)
 		else if (initiate == 1) initiate = 0;
 		printf("Enter pressed %d\n", initiate);
 	}
+	else if (setGenDet == 1 && key == 114)
+	{
+		runGenDet = 1;
+		setGenDet = 0;
+	}
 	else if (key == 115)
 	{
 		saveFile();
@@ -464,6 +484,17 @@ void idleFunc()
 	{
 		printInitGrid();
 		setInitGrid = 0;
+	}
+	else if (runGenDet == 1)
+	{
+		int n;
+		for (n = 0; n < qtdGenDet; n++)
+		{
+			newGeneration();
+			glFlush();
+			Sleep(500);
+		}
+		runGenDet = 0;
 	}
 }
 
