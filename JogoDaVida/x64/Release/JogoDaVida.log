@@ -1,0 +1,10 @@
+﻿  Source.c
+C:\Users\Ignacio\Documents\GitHub\JogoDaVidaLP\JogoDaVida\Source.c(66,8): warning C4047: '=': 'char' differs in levels of indirection from 'char [1]'
+C:\Users\Ignacio\Documents\GitHub\JogoDaVidaLP\JogoDaVida\Source.c(100,23): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(void)'
+C:\Users\Ignacio\Documents\GitHub\JogoDaVidaLP\JogoDaVida\Source.c(37,1): warning C4047: 'initializing': 'char' differs in levels of indirection from 'char [1]'
+C:\Users\Ignacio\Documents\GitHub\JogoDaVidaLP\JogoDaVida\Source.c(507,41): warning C4013: 'sumCellAdj' undefined; assuming extern returning int
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 24 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  JogoDaVida.vcxproj -> C:\Users\Ignacio\Documents\GitHub\JogoDaVidaLP\x64\Release\JogoDaVida.exe

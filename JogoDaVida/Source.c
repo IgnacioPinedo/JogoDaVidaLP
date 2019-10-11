@@ -34,7 +34,7 @@ void createCell(float x, float y);
 
 int main(int argc, char** argv)
 {
-	char c= "";
+	char c = "";
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -63,7 +63,7 @@ int main(int argc, char** argv)
 		readFile();
 	}
 	
-	c == "";
+	c = "";
 
 	//Deixa o usuario determinar a quantidade de geracoes
 	printf("Voce deseja selecionar o numero de geracoes? ('s' para sim e 'n' para nao)\n");
