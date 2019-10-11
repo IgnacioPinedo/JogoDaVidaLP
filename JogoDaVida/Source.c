@@ -6,6 +6,8 @@
 
 int newGrid[MatrixMax][MatrixMax], oldGrid[MatrixMax][MatrixMax], x, y, size, initiate, sleepTime;
 
+int Keys[256];
+
 void myinit();
 
 void drawgrid(int size);
@@ -15,6 +17,8 @@ void mouse(int button, int state, int mousex, int mousey);
 void arrows(int key, int x, int y);
 
 void keyboard(unsigned char key, int x, int y);
+
+void toggleGrid(int xAux, int yAux);
 
 void autoGenerate();
 
@@ -60,10 +64,8 @@ int main(int argc, char** argv)
 	//gerencia entradas pelas teclas de setas
 	glutSpecialFunc(arrows);
 
-	//gerencia entradas pelo teclado
+	//gerencia teclas clicadas do teclado
 	glutKeyboardFunc(keyboard);
-
-	//glutDisplayFunc(autoGenerate);
 
 	glutIdleFunc(autoGenerate);
 
@@ -107,25 +109,208 @@ void mouse(int button, int state, int mousex, int mousey)
 {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)//left click
 	{
+		int z;
+
 		x = mousex / 10;
 		y = mousey / 10;
 
 		float pointX = (float)(x * 20 - size + 10) / size;
 		float pointY = -(float)(y * 20 - size + 10) / size;
+		float add = (float)20 / size;
 
-		if (oldGrid[x][y] == 0)
+		if (Keys['1'] == 1)
 		{
-			oldGrid[x][y] = 1;
+			toggleGrid(x, y);
 			createCell(pointX, pointY);
+			toggleGrid(x - 1, y);
+			createCell(pointX - add, pointY);
+			toggleGrid(x, y + 1);
+			createCell(pointX, pointY + add);
+			toggleGrid(x - 1, y + 1);
+			createCell(pointX - add, pointY + add);
+
+			printf("Block!\n");
 		}
-		else if (oldGrid[x][y] == 1)
+		else if (Keys['2'] == 1)
 		{
-			oldGrid[x][y] = 0;
-			killCell(pointX, pointY);
+			toggleGrid(x, y);
+			createCell(pointX, pointY);
+			toggleGrid(x - 1, y + 1);
+			createCell(pointX - add, pointY + add);
+			toggleGrid(x - 1, y - 1);
+			createCell(pointX - add, pointY - add);
+			toggleGrid(x - 2, y - 1);
+			createCell(pointX - 2 * add, pointY + add);
+			toggleGrid(x - 2, y + 1);
+			createCell(pointX - 2 * add, pointY - add);
+			toggleGrid(x - 3, y);
+			createCell(pointX - 3 * add, pointY);
+
+			printf("Hive!\n");
+		}
+		else if (Keys['3'] == 1)
+		{
+			toggleGrid(x, y);
+			createCell(pointX, pointY);
+			toggleGrid(x, y - 1);
+			createCell(pointX, pointY + add);
+			toggleGrid(x, y - 2);
+			createCell(pointX, pointY + 2 * add);
+
+			printf("Blinker!\n");
+		}
+		else if (Keys['4'] == 1)
+		{
+			toggleGrid(x, y);
+			createCell(pointX, pointY);
+			toggleGrid(x - 1, y);
+			createCell(pointX - add, pointY);
+			toggleGrid(x - 2, y);
+			createCell(pointX - 2 * add, pointY);
+			toggleGrid(x, y + 1);
+			createCell(pointX, pointY - add);
+			toggleGrid(x - 1, y + 1);
+			createCell(pointX - add, pointY - add);
+			toggleGrid(x - 2, y + 1);
+			createCell(pointX - 2 * add, pointY - add);
+
+			printf("Toad!\n");
+		}
+		else if (Keys['5'] == 1)
+		{
+			toggleGrid(x, y);
+			createCell(pointX, pointY);
+			toggleGrid(x - 1, y);
+			createCell(pointX - add, pointY);
+			toggleGrid(x, y - 1);
+			createCell(pointX, pointY + add);
+			toggleGrid(x - 2, y - 3);
+			createCell(pointX - 2 * add, pointY + 3 * add);
+			toggleGrid(x - 3, y - 2);
+			createCell(pointX - 3 * add, pointY + 2 * add);
+			toggleGrid(x - 3, y - 3);
+			createCell(pointX - 3 * add, pointY + 3 * add);
+
+			printf("Beacon!\n");
+		}
+		else if (Keys['6'] == 1)
+		{
+			toggleGrid(x, y);
+			createCell(pointX, pointY);
+			toggleGrid(x - 1, y);
+			createCell(pointX - add, pointY);
+			toggleGrid(x, y - 1);
+			createCell(pointX, pointY + add);
+			toggleGrid(x - 2, y);
+			createCell(pointX - 2 * add, pointY);
+			toggleGrid(x - 1, y - 2);
+			createCell(pointX - add, pointY + 2 * add);
+
+			printf("Glider!\n");
+		}
+		else if (Keys['7'] == 1)
+		{
+			toggleGrid(x, y);
+			createCell(pointX, pointY);
+			toggleGrid(x - 1, y);
+			createCell(pointX - add, pointY);
+			toggleGrid(x - 2, y);
+			createCell(pointX - 2 * add, pointY);
+			toggleGrid(x - 3, y);
+			createCell(pointX - 3 * add, pointY);
+			toggleGrid(x - 4, y - 1);
+			createCell(pointX - 4 * add, pointY + add);
+			toggleGrid(x, y - 1);
+			createCell(pointX, pointY + add);
+			toggleGrid(x, y - 2);
+			createCell(pointX, pointY + 2 * add);
+			toggleGrid(x - 1, y - 3);
+			createCell(pointX - add, pointY + 3 * add);
+			toggleGrid(x - 4, y - 3);
+			createCell(pointX - 4 * add, pointY + 3 * add);
+
+			printf("LWSS!\n");
+		}
+		else if (Keys['8'] == 1)
+		{
+			toggleGrid(x, y);
+			createCell(pointX, pointY);
+			toggleGrid(x - 1, y);
+			createCell(pointX - add, pointY);
+			toggleGrid(x - 2, y);
+			createCell(pointX - 2 * add, pointY);
+			toggleGrid(x - 3, y);
+			createCell(pointX - 3 * add, pointY);
+			toggleGrid(x - 4, y);
+			createCell(pointX - 4 * add, pointY);
+			toggleGrid(x - 5, y - 1);
+			createCell(pointX - 5 * add, pointY + add);
+			toggleGrid(x, y - 1);
+			createCell(pointX, pointY + add);
+			toggleGrid(x, y - 2);
+			createCell(pointX, pointY + 2 * add);
+			toggleGrid(x - 1, y - 3);
+			createCell(pointX - add, pointY + 3 * add);
+			toggleGrid(x - 5, y - 3);
+			createCell(pointX - 5 * add, pointY + 3 * add);
+			toggleGrid(x - 3, y - 4);
+			createCell(pointX - 3 * add, pointY + 4 * add);
+
+			printf("MWSS!\n");
+		}
+		else if (Keys['9'] == 1)
+		{
+			toggleGrid(x, y);
+			createCell(pointX, pointY);
+			toggleGrid(x - 1, y);
+			createCell(pointX - add, pointY);
+			toggleGrid(x - 2, y);
+			createCell(pointX - 2 * add, pointY);
+			toggleGrid(x - 3, y);
+			createCell(pointX - 3 * add, pointY);
+			toggleGrid(x - 4, y);
+			createCell(pointX - 4 * add, pointY);
+			toggleGrid(x - 5, y);
+			createCell(pointX - 5 * add, pointY);
+			toggleGrid(x - 6, y - 1);
+			createCell(pointX - 6 * add, pointY + add);
+			toggleGrid(x, y - 1);
+			createCell(pointX, pointY + add);
+			toggleGrid(x, y - 2);
+			createCell(pointX, pointY + 2 * add);
+			toggleGrid(x - 1, y - 3);
+			createCell(pointX - add, pointY + 3 * add);
+			toggleGrid(x - 6, y - 3);
+			createCell(pointX - 6 * add, pointY + 3 * add);
+			toggleGrid(x - 3, y - 4);
+			createCell(pointX - 3 * add, pointY + 4 * add);
+			toggleGrid(x - 4, y - 4);
+			createCell(pointX - 4 * add, pointY + 4 * add);
+
+			printf("HWSS!\n");
+		}
+		else
+		{
+
+			if (oldGrid[x][y] == 0)
+			{
+				oldGrid[x][y] = 1;
+				createCell(pointX, pointY);
+			}
+			else if (oldGrid[x][y] == 1)
+			{
+				oldGrid[x][y] = 0;
+				killCell(pointX, pointY);
+			}
+
+			x = 0;
+			y = 0;
 		}
 
-		x = 0;
-		y = 0;
+		for (z = 0; z < 256; z++)
+		{
+			if(Keys[z] == 1) Keys[z] = 0;
+		}
 	}
 
 	else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)//right click
@@ -185,6 +370,10 @@ void keyboard(unsigned char key, int x, int y)
 		else if (initiate == 1) initiate = 0;
 		printf("Enter pressed %d\n", initiate);
 	}
+	else
+	{
+		Keys[key] = 1;
+	}
 }
 
 void autoGenerate()
@@ -242,6 +431,18 @@ void newGeneration()
 
 	x = 0;
 	y = 0;
+}
+
+void toggleGrid(int xAux, int yAux) 
+{
+	if (oldGrid[xAux][yAux] == 0)
+	{
+		oldGrid[xAux][yAux] = 1;
+	}
+	else if (oldGrid[x][y] == 1)
+	{
+		oldGrid[xAux][yAux] = 0;
+	}
 }
 
 void killCell(float x, float y)
