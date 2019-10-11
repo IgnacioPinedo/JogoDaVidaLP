@@ -4,7 +4,7 @@
 
 #define MatrixMax 100
 
-int newGrid[MatrixMax][MatrixMax], oldGrid[MatrixMax][MatrixMax], x, y, size, initiate, sleepTime;
+int newGrid[MatrixMax][MatrixMax], oldGrid[MatrixMax][MatrixMax], x, y, size, initiate, sleepTime, setInitGrid;
 
 int Keys[256];
 
@@ -20,9 +20,13 @@ void keyboard(unsigned char key, int x, int y);
 
 void toggleGrid(int xAux, int yAux);
 
-void autoGenerate();
+void idleFunc();
 
 void newGeneration();
+
+void readFile();
+
+void printInitGrid();
 
 void killCell(float x, float y);
 
@@ -30,23 +34,34 @@ void createCell(float x, float y);
 
 int main(int argc, char** argv)
 {
+	char f = "";
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowPosition(50, 50);
 
 	//Escolhe o tamanho da grade
 	printf("escolha o tamanho da grade (minimo 50 - maximo 100):\n");
-	scanf_s("%d", &size);
+	scanf("%d", &size);
 
 	//limita o valor escolhido pelo usuario
 	if (size < 50) size = 50;
 	if (size > 100) size = 100;
-
+	
 	//seta o gerenciamento automatico para parado
 	initiate = 0;
 
 	//seta o valor do tempo de geracoes
 	sleepTime = 1000;
+
+	//Escolhe o tamanho da grade
+	printf("Voce deseja inserir os dados pelo arquivo data? ('s' para sim e 'n' para nao)\n");
+	scanf(" %c", &f);
+
+	if (f == 's')
+	{
+		readFile();
+	}
 
 	//Seta o tamanho da grade
 	size = size * 10;
@@ -67,7 +82,7 @@ int main(int argc, char** argv)
 	//gerencia teclas clicadas do teclado
 	glutKeyboardFunc(keyboard);
 
-	glutIdleFunc(autoGenerate);
+	glutIdleFunc(idleFunc);
 
 	glutMainLoop();
 }
@@ -362,6 +377,63 @@ void arrows(int key, int x, int y)
 	}
 }
 
+void saveFile()
+{
+	int i;
+	int j;
+
+	FILE* file;
+	file = fopen("data.txt", "w");
+
+	for (i = 0; i < MatrixMax; i++)
+	{
+		for (j = 0; j < MatrixMax; j++)
+		{
+			fprintf(file, "%d ", oldGrid[i][j]);
+		}
+		fprintf(file, "\n");
+	}
+	fclose(file);
+}
+
+
+void readFile()
+{
+	int i;
+	int j;
+
+	FILE* file;
+	file = fopen("data.txt", "r");
+
+	for (i = 0; i < MatrixMax; i++)
+	{
+		for (j = 0; j < MatrixMax; j++)
+		{
+			fscanf(file, "%d", &oldGrid[i][j]);
+		}
+	}
+	fclose(file);
+
+	setInitGrid = 1;
+}
+
+void printInitGrid()
+{
+	for (x = 0; x < size / 10; x++)
+	{
+		for (y = 0; y < size / 10; y++)
+		{
+			if (oldGrid[x][y] == 1)
+			{
+				float pointX = (float)(x * 20 - size + 10) / size;
+				float pointY = -(float)(y * 20 - size + 10) / size;
+
+				createCell(pointX, pointY);
+			}
+		}
+	}
+}
+
 void keyboard(unsigned char key, int x, int y)
 {
 	if (key == 13)
@@ -370,18 +442,28 @@ void keyboard(unsigned char key, int x, int y)
 		else if (initiate == 1) initiate = 0;
 		printf("Enter pressed %d\n", initiate);
 	}
+	else if (key == 115)
+	{
+		saveFile();
+		exit(0);
+	}
 	else
 	{
 		Keys[key] = 1;
 	}
 }
 
-void autoGenerate()
+void idleFunc()
 {
 	if (initiate == 1)
 	{
 		newGeneration();
 		Sleep(sleepTime);
+	}
+	else if (setInitGrid == 1)
+	{
+		printInitGrid();
+		setInitGrid = 0;
 	}
 }
 
