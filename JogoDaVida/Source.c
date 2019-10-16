@@ -492,7 +492,7 @@ void idleFunc()
 		{
 			newGeneration();
 			glFlush();
-			Sleep(500);
+			Sleep(sleepTime);
 		}
 		runGenDet = 0;
 	}
