@@ -15,11 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.c">
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="JDV.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JDVController.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JDVView.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JDVModel.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ClInclude Include="JDVView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JDVModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JDVController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

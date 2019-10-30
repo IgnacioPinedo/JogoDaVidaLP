@@ -126,10 +126,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.c" />
+    <ClCompile Include="JDV.c" />
+    <ClCompile Include="JDVController.c" />
+    <ClCompile Include="JDVModel.c" />
+    <ClCompile Include="JDVView.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="JDVController.h" />
+    <ClInclude Include="JDVModel.h" />
+    <ClInclude Include="JDVView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
